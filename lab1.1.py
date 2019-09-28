@@ -1,11 +1,4 @@
-from turtle import *
-
-def move(z, t):
-    position = {
-    'x': z * 10 ,
-    'y': t * 10
-    }
-    goto(position['x'], position['y'])
+from utils import *
 
 move(-20, -20)
 move(-28, -12)
