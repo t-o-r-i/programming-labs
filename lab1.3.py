@@ -1,28 +1,31 @@
 from utils import *
 
-ox = get_dimention('Введите OX: ', 'Ошибка: значение ОХ должно быть больше нуля')
-oy = get_dimention('Введите OY: ', 'Ошибка: значение OY должно быть больше нуля')
+# ox = get_dimention('Введите OX: ', 'Ошибка: значение ОХ должно быть больше нуля')
+# oy = get_dimention('Введите OY: ', 'Ошибка: значение OY должно быть больше нуля')
 
-while True:
-    xn = get_coordinate('Введите Xн: ', 'Ошибка: значение Хн должно быть числом')
-    xk = get_coordinate('Введите Xк: ', 'Ошибка: значение Хк должно быть числом')
-    if xn < xk:
-        break
-    print('Хн должно быть меньше Хк')
-
-dx = get_dimention('Введите DX: ', 'Ошибка: значение DX должно быть больше нуля')
+# while True:
+#     xn = get_coordinate('Введите Xн: ', 'Ошибка: значение Хн должно быть числом')
+#     xk = get_coordinate('Введите Xк: ', 'Ошибка: значение Хк должно быть числом')
+#     if xn < xk:
+#         break
+#     print('Хн должно быть меньше Хк')
+ox = float(input('Введите OX: '))
+oy = float(input('Введите OY: '))
+xn = float(input('Введите Xн: '))
+xk = float(input('Введите Xк: '))
+dx = float(input('Введите DX: ')) # get_dimention('Введите DX: ', 'Ошибка: значение DX должно быть больше нуля')
 
 def polynomial(x):
-    return -40 - (-3 * (x + 5)**2) / (2 * x - 6)
+    return -40 - (3 * (x + 5)**2) / (2 * x - 6)
 
 if abs(xn) > abs(xk):
     widthx = abs(xn) * ox * 10
 else:
     widthx = abs(xk) * ox * 10
 
-widthy = 20 * oy * 10
+widthy = 200 * oy * 10
 
-speed(1)
+speed(0)
 
 penup()
 goto(-widthx, 0)
@@ -65,5 +68,32 @@ while cur_y < widthy:
 
     cur_y += oy * 10
 
+x = xn - dx
 
+penup()
+speed(1)
+
+while x < xk:
+    print(x)
+    if abs(x - 3) <= dx + 0.01:
+        penup()
+        x += dx
+        goto(x * ox * 10, -widthy)
+        continue
+    y = polynomial(x) * oy * 10
+    if abs(y) > widthy:
+        penup()
+        x += dx
+        cur_y = widthy if y > 0 else -widthy
+        goto(x * ox * 10, cur_y)
+        continue
+    if x < xn:
+        penup()
+        x += dx
+        goto(x * ox * 10, polynomial(x) * oy * 10)
+        continue
+    pendown()
+    goto(x * ox * 10, y)
+    x += dx
+    
 done()
