@@ -16,15 +16,25 @@ def polynomial(x):
     return -40 - (-3 * (x + 5)**2) / (2 * x - 6)
 
 if abs(xn) > abs(xk):
-    widthx = abs(xn)*ox*10
+    widthx = abs(xn) * ox * 10
 else:
-    widthx = abs(xk)*ox*10
+    widthx = abs(xk) * ox * 10
+
+widthy = 20 * oy * 10
+
+speed(1)
 
 penup()
 goto(-widthx, 0)
 pendown()
 goto(widthx, 0)
 
+penup()
+goto(0, widthy)
+pendown()
+goto(0, -widthy)
+
+cur_y = oy * 10
 cur_x = ox * 10
 
 while cur_x < widthx:
@@ -37,9 +47,23 @@ while cur_x < widthx:
     goto(-cur_x, 5)
     pendown()
     goto(-cur_x, -5)
+    penup()
 
     cur_x += ox * 10
 
+while cur_y < widthy:
+    penup()
+    goto(-5, cur_y)
+    pendown()
+    goto(5, cur_y)
+
+    penup()
+    goto(-5, -cur_y)
+    pendown()
+    goto(5, -cur_y)
+    penup()
+
+    cur_y += oy * 10
 
 
 done()
